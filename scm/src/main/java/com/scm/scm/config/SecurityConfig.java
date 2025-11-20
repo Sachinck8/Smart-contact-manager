@@ -1,62 +1,52 @@
 package com.scm.scm.config;
 
-import com.scm.scm.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @Configuration
 public class SecurityConfig {
 
-    private final CustomUserDetailsService userDetailsService;
-
-    public SecurityConfig(CustomUserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
+    // Trust Render's proxy headers for HTTPS
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService); // loads user from DB
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+    public ForwardedHeaderFilter forwardedHeaderFilter() {
+        return new ForwardedHeaderFilter();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-            .csrf(csrf -> csrf.disable())
+            .csrf(csrf -> csrf.disable()) // disable CSRF for simplicity; enable in production
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/auth/**",
-                    "/css/**",
-                    "/js/**",
-                    "/images/**",
-                    "/webjars/**"
-                ).permitAll()
+                // Public pages
+                .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/images/**").permitAll()
+                // Any other page requires authentication
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/auth/login")
-                .loginProcessingUrl("/auth/login")
-                .defaultSuccessUrl("/user/dashboard", true)
+                .loginPage("/login")         // your custom login page
+                .loginProcessingUrl("/login")// Spring Security login POST URL
+                .defaultSuccessUrl("/dashboard", true) // redirect after successful login
+                .failureUrl("/login?error=true")
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/auth/logout")
-                .logoutSuccessUrl("/auth/login?logout")
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout=true")
                 .permitAll()
             );
 
         return http.build();
+    }
+
+    // Password encoder bean
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
