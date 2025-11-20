@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AuthController {
 
     // login page
-    @GetMapping("/login")
+    @GetMapping("auth/login")
     public String loginPage() {
         return "auth/login";
     }
 
     // register page
-    @GetMapping("/register")
+    @GetMapping("auth/register")
     public String registerPage() {
         return "auth/register";
     }
