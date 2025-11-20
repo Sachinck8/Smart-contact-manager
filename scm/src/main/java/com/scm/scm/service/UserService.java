@@ -9,40 +9,47 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private RoleRepository roleRepository;
+    public UserService(UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    // Register new user
-    public User registerUser(User user) {
+    // Save a new user with encoded password and default role
+    public User saveUser(User user) {
         // Encode password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Assign default role
-        Role role = roleRepository.findByName("ROLE_USER")
-                        .orElseThrow(() -> new RuntimeException("Role not found"));
-        user.setRoles(new HashSet<>());
-        user.getRoles().add(role);
+        // Assign ROLE_USER
+        Role userRole = roleRepository.findByName("USER")
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+        HashSet<Role> roles = new HashSet<>();
+        roles.add(userRole);
+        user.setRoles(roles);
 
-        // Save user
         return userRepository.save(user);
     }
+
+    // Get user by email
     public User getUserByEmail(String email) {
-    return userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("User not found"));
-}
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 
-public boolean existsByEmail(String email) {
-    return userRepository.existsByEmail(email);
-}
-
+    // Check if email already exists
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }
