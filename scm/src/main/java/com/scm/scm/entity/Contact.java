@@ -10,9 +10,7 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
-
     private String email;
     private String phone;
 
@@ -20,17 +18,7 @@ public class Contact {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Constructors
-    public Contact() {}
-
-    public Contact(String name, String email, String phone, User user) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.user = user;
-    }
-
-    // Getters and Setters
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
