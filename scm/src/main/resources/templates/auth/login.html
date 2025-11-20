@@ -1,9 +1,10 @@
-<<!doctype html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: body">
 <head>
   <title>Login - SCM</title>
 </head>
 <body>
+
 <div class="row justify-content-center">
   <div class="col-md-6">
     <div class="card shadow-sm">
@@ -13,7 +14,7 @@
         <form th:action="@{/auth/login}" method="post">
           <div class="mb-3">
             <label class="form-label">Email</label>
-            <input class="form-control" name="username" placeholder="you@example.com" required/>
+            <input class="form-control" name="username" required/>
           </div>
 
           <div class="mb-3">
@@ -27,10 +28,10 @@
         <div class="mt-3 text-center">
           <a th:href="@{/auth/register}">Create an account</a>
         </div>
-
       </div>
     </div>
   </div>
 </div>
+
 </body>
 </html>
