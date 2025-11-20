@@ -1,7 +1,7 @@
 package com.scm.scm.controller;
 
-import com.scm.scm.model.Contact;
-import com.scm.scm.model.User;
+import com.scm.scm.entity.Contact;
+import com.scm.scm.entity.User;
 import com.scm.scm.service.ContactService;
 import com.scm.scm.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

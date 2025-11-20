@@ -2,8 +2,8 @@ package com.scm.scm.service;
 
 import com.scm.scm.entity.Role;
 import com.scm.scm.entity.User;
-import com.scm.scm.repository.RoleRepo;
-import com.scm.scm.repository.UserRepo;
+import com.scm.scm.repository.RoleRepository;
+import com.scm.scm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

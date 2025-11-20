@@ -2,7 +2,7 @@ package com.scm.scm.service;
 
 import com.scm.scm.entity.Contact;
 import com.scm.scm.entity.User;
-import com.scm.scm.repository.ContactRepo;
+import com.scm.scm.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.scm.scm.controller;
 
-import com.scm.scm.model.User;
+import com.scm.scm.entity.User;
 import com.scm.scm.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
