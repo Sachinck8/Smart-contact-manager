@@ -1,7 +1,7 @@
 package com.scm.scm.service;
 
 import com.scm.scm.entity.User;
-import com.scm.scm.repo.UserRepository;
+import com.scm.scm.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
