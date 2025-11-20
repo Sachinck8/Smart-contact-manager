@@ -1,27 +1,91 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: title">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Dashboard - SCM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard - Smart Contact Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="row">
-  <div class="col-md-3">
-    <div class="card">
-      <div class="card-body">
-        <h5 th:text="${user.name}">User Name</h5>
-        <p th:text="${user.email}">email</p>
-        <a class="btn btn-outline-primary btn-sm" th:href="@{/contacts}">My Contacts</a>
-      </div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/user/dashboard}">Smart Contact Manager</a>
+        <div class="d-flex">
+            <span class="navbar-text text-white me-3">Hello, <b th:text="${user.username}">User</b></span>
+            <a class="btn btn-outline-light" th:href="@{/auth/logout}">Logout</a>
+        </div>
     </div>
-  </div>
-  <div class="col-md-9">
-    <div class="card">
-      <div class="card-body">
-        <h4>Welcome, <span th:text="${user.name}">User</span></h4>
-        <p>Use the Contacts page to manage your contacts.</p>
+</nav>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Your Contacts</h2>
+        <a class="btn btn-success" th:href="@{/contacts/add}">Add Contact</a>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="contact : ${contacts}">
+                <td th:text="${contact.name}">Contact Name</td>
+                <td th:text="${contact.email}">Contact Email</td>
+                <td th:text="${contact.phone}">Contact Phone</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" th:href="@{'/contacts/edit/' + ${contact.id}}">Edit</a>
+                    <button class="btn btn-sm btn-danger" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteModal" 
+                            th:attr="data-id=${contact.id},data-name=${contact.name}">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <b id="contactName">this contact</b>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Delete</a>
       </div>
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Pass contact info to modal dynamically
+    const deleteModal = document.getElementById('deleteModal')
+    deleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget
+        const contactId = button.getAttribute('data-id')
+        const contactName = button.getAttribute('data-name')
+        const modalTitle = deleteModal.querySelector('#contactName')
+        modalTitle.textContent = contactName
+        const confirmBtn = deleteModal.querySelector('#confirmDeleteBtn')
+        confirmBtn.setAttribute('href', '/contacts/delete/' + contactId)
+    })
+</script>
+
 </body>
 </html>
