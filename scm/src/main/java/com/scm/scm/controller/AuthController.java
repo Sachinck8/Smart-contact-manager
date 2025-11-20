@@ -43,7 +43,7 @@ public class AuthController {
             return "layout/base";
         }
 
-        userService.registerUser(user); // save user
+        userService.saveUser(user); // save user
         model.addAttribute("success", "Registration successful! You can login now.");
         model.addAttribute("pageTitle", "Register - Smart Contact Manager");
         model.addAttribute("content", "auth/register :: content");
