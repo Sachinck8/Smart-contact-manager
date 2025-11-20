@@ -1,0 +1,38 @@
+package com.scm.controller;
+
+import com.scm.entity.User;
+import com.scm.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/auth")
+public class AuthController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "auth/login";
+    }
+
+    @GetMapping("/register")
+    public String registerPage(Model m) {
+        m.addAttribute("user", new User());
+        return "auth/register";
+    }
+
+    @PostMapping("/register")
+    public String register(User user) {
+        // basic check - you should add validations in service
+        if (userService.findByEmail(user.getEmail()) != null) {
+            return "redirect:/auth/register?error";
+        }
+        userService.saveUser(user);
+        return "redirect:/auth/login?registered";
+    }
+}

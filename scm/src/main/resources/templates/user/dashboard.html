@@ -1,0 +1,27 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: title">
+<head>
+  <title>Dashboard - SCM</title>
+</head>
+<body>
+<div class="row">
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 th:text="${user.name}">User Name</h5>
+        <p th:text="${user.email}">email</p>
+        <a class="btn btn-outline-primary btn-sm" th:href="@{/contacts}">My Contacts</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-body">
+        <h4>Welcome, <span th:text="${user.name}">User</span></h4>
+        <p>Use the Contacts page to manage your contacts.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
