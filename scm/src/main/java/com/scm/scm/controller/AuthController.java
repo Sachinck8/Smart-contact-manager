@@ -15,7 +15,7 @@ public class AuthController {
     private final UserService userService;
     
 
-    public AuthController(UserService userService, ) {
+    public AuthController(UserService userService) {
         this.userService = userService;
         
     }
@@ -29,7 +29,7 @@ public class AuthController {
     // Register page
    @GetMapping("/register")
    public String register(){
-    return "auth/register"
+    return "auth/register";
    }
 
    @PostMapping("/register")
