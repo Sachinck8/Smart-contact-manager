@@ -21,7 +21,7 @@ public class AuthController {
 
     public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.passwordEncoder=passwordEncoder
+        this.passwordEncoder=passwordEncoder;
         
     }
 
