@@ -38,7 +38,7 @@ public class AuthController {
                               @RequestParam String password){
     
     
-    User user = new user();
+    User user = new User();
     user.setName(name);
     user.setEmail(email);
     user.setPassword(password);
