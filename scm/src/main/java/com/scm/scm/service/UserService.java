@@ -25,17 +25,14 @@ public class UserService {
         // encode password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // assign ROLE_USER
-        Role role = roleRepository.findByName("ROLE_USER");
-        if (role == null) {
-            role = new Role();
-            role.setName("ROLE_USER");
-            roleRepository.save(role);
-        }
+        // get role
+        Role roleUser = roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new RuntimeException("ROLE_USER not found in DB"));
 
-        user.getRoles().add(role);
+        // assign
+        user.getRoles().add(roleUser);
 
-        // save user
+        // save
         return userRepository.save(user);
     }
 }

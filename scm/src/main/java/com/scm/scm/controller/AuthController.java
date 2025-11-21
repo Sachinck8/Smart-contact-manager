@@ -4,9 +4,7 @@ import com.scm.scm.entity.User;
 import com.scm.scm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AuthController {
@@ -16,12 +14,12 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
-        return "auth/login";
+        return "auth/login"; // login.html
     }
 
     @GetMapping("/register")
     public String register() {
-        return "auth/register";
+        return "auth/register"; // register.html
     }
 
     @PostMapping("/register")
@@ -34,8 +32,8 @@ public class AuthController {
         user.setEmail(email);
         user.setPassword(password);
 
-        userService.saveUser(user); // ✅ Main FIX
+        userService.saveUser(user);
 
-        return "redirect:/login?success=true";
+        return "redirect:/login?success";
     }
 }
