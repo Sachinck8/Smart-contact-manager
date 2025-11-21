@@ -1,9 +1,8 @@
 package com.scm.scm.controller;
 
 import com.scm.scm.entity.User;
-import com.scm.scm.repository.UserRepository;
+import com.scm.scm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,15 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private UserService userService;
 
     @GetMapping("/login")
     public String login() {
@@ -41,15 +32,10 @@ public class AuthController {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
 
-        userRepository.save(user);  // ✅ fixed
+        userService.saveUser(user); // ✅ Main FIX
 
-        return "redirect:/login";
-    }
-
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "layout/base";
+        return "redirect:/login?success=true";
     }
 }
