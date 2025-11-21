@@ -16,38 +16,12 @@ public class AuthController {
         this.userService = userService;
     }
 
-    // Login page
+    
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("pageTitle", "Login - Smart Contact Manager");
-        model.addAttribute("content", "auth/login :: content");
-        return "layout/base";
+    public String login() {
+        return "auth/login";
     }
 
     // Register page
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("pageTitle", "Register - Smart Contact Manager");
-        model.addAttribute("content", "auth/register :: content");
-        model.addAttribute("user", new User()); // form binding
-        return "layout/base";
-    }
-
-    // Handle registration
-    @PostMapping("/register")
-    public String registerUser(User user, Model model) {
-        if (userService.existsByEmail(user.getEmail())) {
-            model.addAttribute("error", "Email already registered!");
-            model.addAttribute("pageTitle", "Register - Smart Contact Manager");
-            model.addAttribute("content", "auth/register :: content");
-            return "layout/base";
-        }
-
-        userService.saveUser(user); // save user
-        model.addAttribute("success", "Registration successful! You can login now.");
-        model.addAttribute("pageTitle", "Register - Smart Contact Manager");
-        model.addAttribute("content", "auth/register :: content");
-        model.addAttribute("user", new User());
-        return "layout/base";
-    }
+   
 }
