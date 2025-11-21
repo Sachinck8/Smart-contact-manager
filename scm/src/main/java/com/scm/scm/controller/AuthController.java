@@ -41,7 +41,7 @@ public class AuthController {
     User user = new user();
     user.setName(name);
     user.setEmail(email);
-    user.setPassword(encodedpassword);
+    user.setPassword(password);
 
     userService.saveUser(user);
      }
