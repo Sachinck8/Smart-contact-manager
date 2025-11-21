@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
+     @Autowired
+    private UserRepository userRepository; // ✅ inject instance
 
-    private final UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder; // ✅ inject encoder
     
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder=passwordEncoder
         
     }
 
@@ -42,10 +46,10 @@ public class AuthController {
     User user = new User();
     user.setName(name);
     user.setEmail(email);
-    user.setPassword(password);
+    user.setPassword(passwordEncoder.encode(password));
 
     UserRepository.save(user);
-     return "redirect:/login"; 
+    return "redirect:/login"; 
 
      }
 
