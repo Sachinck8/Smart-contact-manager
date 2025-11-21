@@ -33,9 +33,9 @@ public class AuthController {
    }
 
    @PostMapping("/register")
-   public String registerUser(@RequestParam String name,
-                              @RequestParam String email,
-                              @RequestParam String password){
+   public String registerUser(@RequestParam("name") String name,
+                              @RequestParam("email") String email,
+                              @RequestParam("password") String password){
     
     
     User user = new User();
@@ -45,7 +45,7 @@ public class AuthController {
 
     userService.saveUser(user);
      return "redirect:/login"; 
-     
+
      }
 
 }
