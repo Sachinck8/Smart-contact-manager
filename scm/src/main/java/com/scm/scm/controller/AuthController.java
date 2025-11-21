@@ -1,6 +1,7 @@
 package com.scm.scm.controller;
 
 import com.scm.scm.entity.User;
+import com.scm.scm.repository.UserRepository;
 import com.scm.scm.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,9 +44,14 @@ public class AuthController {
     user.setEmail(email);
     user.setPassword(password);
 
-    userService.saveUser(user);
+    UserRepository.save(user);
      return "redirect:/login"; 
 
+     }
+
+     @GetMapping("/welcome")
+     public String welcome(){
+        return "layout/base";
      }
 
 }
