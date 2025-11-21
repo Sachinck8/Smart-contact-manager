@@ -44,6 +44,8 @@ public class AuthController {
     user.setPassword(password);
 
     userService.saveUser(user);
+     return "redirect:/login"; 
+     
      }
 
 }
