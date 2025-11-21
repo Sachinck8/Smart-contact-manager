@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AuthController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, ) {
         this.userService = userService;
+        this.passwordEncoder=passwordEncoder;
     }
 
     
@@ -23,5 +25,23 @@ public class AuthController {
     }
 
     // Register page
-   
+   @GetMapping("/register")
+   public String register(){
+    return "auth/register"
+   }
+
+   @PostMapping("/register")
+   public String registerUser(@RequestParam String name,
+                              @RequestParam String email,
+                              @RequestParam String password){
+    
+    
+    User user = new user();
+    user.setName(name);
+    user.setEmail(email);
+    user.setPassword(encodedpassword);
+
+    userService.saveUser(user);
+     }
+
 }
