@@ -13,6 +13,7 @@ public class Contact {
     private String name;
     private String email;
     private String phone;
+    private String about;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,6 +31,9 @@ public class Contact {
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+
+    public String getAbout() { return about; }
+    public void setAbout(String about) { this.about = about; }
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
