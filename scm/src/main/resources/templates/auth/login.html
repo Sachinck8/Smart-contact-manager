@@ -2,32 +2,103 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Login | Smart Contact Manager</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Login Page</h2>
+<div class="container">
 
-<!-- Error message -->
-<div th:if="${param.error}">
-    <p style="color:red;font-weight:bold;">❌ Invalid username or password!</p>
+    <h2>Login</h2>
+
+    <!-- Error -->
+    <div th:if="${param.error}">
+        <p class="error">❌ Invalid email or password!</p>
+    </div>
+
+    <!-- Logout -->
+    <div th:if="${param.logout}">
+        <p class="success">✔ Logged out successfully!</p>
+    </div>
+
+    <!-- Login Form -->
+    <form th:action="@{/login}" method="post">
+
+        <label>Email</label>
+        <input type="text" name="email" placeholder="Enter your email" required>
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
 </div>
-
-<!-- Logout message -->
-<div th:if="${param.logout}">
-    <p style="color:green;font-weight:bold;">✔ Logged out successfully</p>
-</div>
-
-<form th:action="@{/do-login}" method="post">
-    <label>Email:</label>
-    <input type="text" name="username" required><br><br>
-
-    <label>Password:</label>
-    <input type="password" name="password" required><br><br>
-
-    <button type="submit">Login</button>
-</form>
 
 </body>
 </html>
+
 
