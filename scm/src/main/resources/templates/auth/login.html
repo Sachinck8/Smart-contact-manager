@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login - SCM</title>
+    <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
 
-    <form method="post" action="/login">
-        <label>Email:</label>
-        <input type="text" name="email" required /><br/>
+<h2>Login Page</h2>
 
-        <label>Password:</label>
-        <input type="password" name="password" required /><br/>
+<!-- Error message -->
+<div th:if="${param.error}">
+    <p style="color:red;font-weight:bold;">❌ Invalid username or password!</p>
+</div>
 
-        <button type="submit">Login</button>
-    </form>
+<!-- Logout message -->
+<div th:if="${param.logout}">
+    <p style="color:green;font-weight:bold;">✔ Logged out successfully</p>
+</div>
+
+<form th:action="@{/do-login}" method="post">
+    <label>Email:</label>
+    <input type="text" name="username" required><br><br>
+
+    <label>Password:</label>
+    <input type="password" name="password" required><br><br>
+
+    <button type="submit">Login</button>
+</form>
 
 </body>
 </html>
+
