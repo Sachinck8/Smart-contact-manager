@@ -8,6 +8,6 @@ public class DashboardController {
 
     @GetMapping("/dashboard")
     public String dashboard() {
-        return "user/dashboard";   // ⭐ load from /templates/user/dashboard.html
+        return "user/fragements/dashboard";   // ⭐ load from /templates/user/dashboard.html
     }
 }
