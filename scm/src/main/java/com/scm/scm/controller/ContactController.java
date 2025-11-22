@@ -22,31 +22,31 @@ public class ContactController {
     @Autowired
     private UserRepository userRepository;
 
-    // 🟢 Get logged-in user
+    //  Get logged-in user
     private User getLoggedUser(Authentication authentication) {
         String email = authentication.getName();
         return userRepository.findByEmail(email).orElse(null);
     }
 
-    // 🟢 Show All Contacts Page
+    //  Show All Contacts Page
     @GetMapping("/contacts")
     public String viewContacts(Model model, Authentication auth) {
 
         User user = getLoggedUser(auth);
 
-        model.addAttribute("contacts", contactService.getContactsByUser(user));
+        model.addAttribute("contacts", contactService.getContactsForUser(user));
 
         return "user/contacts"; // page: templates/user/contacts.html
     }
 
-    // 🟢 Show Add Contact Form
+    //  Show Add Contact Form
     @GetMapping("/add-contact")
     public String addContactForm(Model model) {
         model.addAttribute("contact", new Contact());
         return "user/add_contact"; // page: templates/user/add_contact.html
     }
 
-    // 🟢 Save Contact
+    //  Save Contact
     @PostMapping("/save-contact")
     public String saveContact(@ModelAttribute Contact contact, Authentication auth) {
 
@@ -58,7 +58,7 @@ public class ContactController {
         return "redirect:/user/contacts?success";
     }
 
-    // 🟢 Edit Contact Page
+    //  Edit Contact Page
     @GetMapping("/edit/{id}")
     public String editContact(@PathVariable Long id, Model model) {
 
@@ -68,7 +68,7 @@ public class ContactController {
         return "user/edit_contact"; // page: templates/user/edit_contact.html
     }
 
-    // 🟢 Update Contact
+    //  Update Cont
     @PostMapping("/update-contact")
     public String updateContact(@ModelAttribute Contact contact, Authentication auth) {
 
@@ -80,7 +80,7 @@ public class ContactController {
         return "redirect:/user/contacts?updated";
     }
 
-    // 🟢 Delete Contact
+    // Delete Contact
     @GetMapping("/delete/{id}")
     public String deleteContact(@PathVariable Long id) {
 
