@@ -3,6 +3,8 @@ package com.scm.scm.entity;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "users_scm")
